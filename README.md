@@ -1,5 +1,7 @@
 # Sistema Automotivo — Gestão de Estoque de Veículos
 
+Repositório: https://github.com/cassio8732/gestao-estoque-veiculos
+
 API REST em **Java 17**, **Spring Boot 3** e **H2** (arquivo local, compatível com sintaxe MySQL) para cadastro, consulta, filtros, atualização e remoção de veículos, marcas e modelos (trabalho de Programação Orientada a Objetos).
 
 ## Pré-requisitos
