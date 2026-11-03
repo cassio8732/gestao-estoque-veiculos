@@ -20,6 +20,10 @@ cd backend
 
 A aplicação sobe na porta **8081** com o perfil `dev` e grava o H2 em `backend/data/estoque.*`. No `dev`, o schema é **recriado** a cada inicialização e os dados de demonstração são carregados de novo (tipos de modelo + veículos de exemplo)., cadastra **sempre** os tipos de modelo SUV, Sedan, Hatch e Picape (se ainda não existirem) e carrega marcas/veículos de demonstração na **primeira** execução (quando ainda não há veículos).
 
+### Interface web (HTML)
+
+Com a API rodando, abra [http://localhost:8081/](http://localhost:8081/) para listar, filtrar, cadastrar, editar e excluir veículos.
+
 ### Documentação interativa
 
 - Swagger UI: [http://localhost:8081/swagger-ui.html](http://localhost:8081/swagger-ui.html) — em **Veículos → GET /api/veiculos** (listar), use **Try it out** para ver os campos de filtro (`marca`, `modelo`, `anoMin`, etc.). Não use o GET `/api/veiculos/{id}` para filtrar.

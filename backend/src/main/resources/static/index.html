@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Estoque de Veículos</title>
+    <link rel="stylesheet" href="/css/estoque.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="wrap topbar__inner">
+        <h1>Estoque de Veículos</h1>
+        <nav class="topbar__links">
+          <a href="/swagger-ui.html" target="_blank" rel="noopener">API (Swagger)</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="card" aria-labelledby="filtros-title">
+        <h2 id="filtros-title">Filtros</h2>
+        <form id="form-filtros" class="grid-filtros">
+          <label>
+            Marca
+            <input type="text" name="marca" placeholder="Ex.: Toyota" list="lista-marcas" />
+          </label>
+          <label>
+            Tipo (modelo)
+            <select name="modelo" id="select-modelo-filtro">
+              <option value="">Todos</option>
+            </select>
+          </label>
+          <label>
+            Ano mín.
+            <input type="number" name="anoMin" min="1900" max="2100" placeholder="2020" />
+          </label>
+          <label>
+            Ano máx.
+            <input type="number" name="anoMax" min="1900" max="2100" placeholder="2024" />
+          </label>
+          <label>
+            Preço mín.
+            <input type="number" name="precoMin" min="0" step="0.01" placeholder="50000" />
+          </label>
+          <label>
+            Preço máx.
+            <input type="number" name="precoMax" min="0" step="0.01" placeholder="200000" />
+          </label>
+          <label>
+            Status
+            <select name="status">
+              <option value="">Todos</option>
+              <option value="DISPONIVEL">Disponível</option>
+              <option value="VENDIDO">Vendido</option>
+              <option value="DESCONTINUADO">Descontinuado</option>
+            </select>
+          </label>
+          <div class="filtros-acoes">
+            <button type="submit" class="btn btn--primary">Buscar</button>
+            <button type="button" class="btn btn--ghost" id="btn-limpar-filtros">Limpar</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card" aria-labelledby="cadastro-title">
+        <h2 id="cadastro-title">Cadastrar veículo</h2>
+        <form id="form-veiculo" class="grid-cadastro">
+          <label>
+            Marca *
+            <input type="text" name="marca" required list="lista-marcas" placeholder="Toyota" />
+          </label>
+          <label>
+            Tipo *
+            <select name="modelo" id="select-modelo-cadastro" required></select>
+          </label>
+          <label>
+            Ano *
+            <input type="number" name="ano" required min="1900" max="2100" value="2023" />
+          </label>
+          <label>
+            Cor *
+            <input type="text" name="cor" required placeholder="Prata" />
+          </label>
+          <label>
+            Preço (R$) *
+            <input type="number" name="preco" required min="1" step="0.01" placeholder="95000" />
+          </label>
+          <label>
+            Quilometragem *
+            <input type="number" name="quilometragem" required min="0" value="0" />
+          </label>
+          <label>
+            Status *
+            <select name="status" required>
+              <option value="DISPONIVEL">Disponível</option>
+              <option value="VENDIDO">Vendido</option>
+              <option value="DESCONTINUADO">Descontinuado</option>
+            </select>
+          </label>
+          <div class="cadastro-acoes">
+            <button type="submit" class="btn btn--primary">Salvar veículo</button>
+          </div>
+        </form>
+        <details class="extra">
+          <summary>Nova marca</summary>
+          <form id="form-marca" class="inline-form">
+            <input type="text" name="nome" placeholder="Nome da marca" required />
+            <button type="submit" class="btn btn--secondary">Cadastrar marca</button>
+          </form>
+        </details>
+      </section>
+
+      <datalist id="lista-marcas"></datalist>
+
+      <section class="card">
+        <div class="lista-cabecalho">
+          <h2>Veículos no estoque</h2>
+          <span id="contagem" class="badge">0</span>
+        </div>
+        <p id="msg-erro" class="msg msg--erro" hidden></p>
+        <p id="msg-ok" class="msg msg--ok" hidden></p>
+        <div class="tabela-wrap">
+          <table class="tabela" id="tabela-veiculos">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Marca</th>
+                <th>Tipo</th>
+                <th>Ano</th>
+                <th>Cor</th>
+                <th>Preço</th>
+                <th>Km</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="corpo-tabela">
+              <tr>
+                <td colspan="9" class="vazio">Carregando…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="dialog-editar">
+      <form method="dialog" id="form-editar">
+        <h3>Editar veículo <span id="editar-id"></span></h3>
+        <label>
+          Preço (R$)
+          <input type="number" name="preco" min="1" step="0.01" />
+        </label>
+        <label>
+          Quilometragem
+          <input type="number" name="quilometragem" min="0" />
+        </label>
+        <label>
+          Status
+          <select name="status">
+            <option value="DISPONIVEL">Disponível</option>
+            <option value="VENDIDO">Vendido</option>
+            <option value="DESCONTINUADO">Descontinuado</option>
+          </select>
+        </label>
+        <div class="dialog-acoes">
+          <button type="submit" class="btn btn--primary">Atualizar</button>
+          <button type="button" class="btn btn--ghost" id="btn-fechar-dialog">Cancelar</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="/js/estoque.js" defer></script>
+  </body>
+</html>
